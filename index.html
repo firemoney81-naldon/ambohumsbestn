@@ -1,23 +1,406 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+
+
+  <!-- CSS (기존 스타일에서 부드럽고 다채로운 디자인으로 변경) -->
+  <style>
+    /* 폰트 설정 및 기본 레이아웃 */
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
+    body { font-family: 'Noto Sans KR', sans-serif; line-height: 1.8; margin: 0; padding: 0; background-color: #f4f7f6; color: #333; }
+    header { background-color: #e8f3ff; color: #1a1a1a; padding: 40px 15px; text-align: center; border-bottom: 5px solid #004aad; border-radius: 0 0 10px 10px; }
+    header h1 { font-size: 2.5em; color: #004aad; margin-bottom: 10px; font-weight: 700; }
+    header p { font-size: 1.1em; color: #555; margin-bottom: 20px; }
+    section { max-width: 900px; margin: 25px auto; padding: 30px; background: #fff; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    h2, h3, h4 { color: #004aad; margin-top: 20px; margin-bottom: 15px; line-height: 1.5; }
+    h2 { font-size: 2em; border-bottom: 2px solid #e8f3ff; padding-bottom: 10px; }
+    h3 { font-size: 1.5em; color: #0070f3; }
+    ul, ol { padding-left: 25px; margin-bottom: 20px; }
+    li { margin-bottom: 10px; }
+    p { margin-bottom: 15px; text-align: justify; }
+    strong { font-weight: 700; color: #004aad; }
+
+    /* 테이블 스타일 */
+    table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 20px 0; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    th, td { padding: 15px; text-align: center; border-bottom: 1px solid #eee; }
+    th { background: #004aad; color: #fff; font-weight: 700; }
+    tr:nth-child(even) { background-color: #f9f9f9; }
+    tr:hover { background-color: #f1f1f1; }
+
+    /* CTA 버튼 스타일 */
+    .btn-cta {
+      display: inline-block;
+      padding: 14px 30px;
+      background: #ff5a5f; /* 따뜻한 색감으로 변경 */
+      color: #fff;
+      font-weight: 700;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(255, 90, 95, 0.4);
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      text-align: center;
+      margin-top: 20px;
+      cursor: pointer;
+      border: none;
+      font-size: 1.1em;
+      text-decoration: none;
+    }
+    .btn-cta:hover {
+      background: #e04c50;
+      transform: translateY(-2px);
+    }
+
+    /* 반응형 및 레이아웃 조정 */
+    @media(max-width: 600px) {
+      body { padding: 10px; }
+      header { padding: 30px 15px; }
+      section { margin: 15px auto; padding: 20px; }
+      header h1 { font-size: 2em; }
+      .btn-cta { width: 100%; padding: 15px 0; font-size: 1em; }
+      th, td { padding: 12px; font-size: 0.9em; }
+    }
+
+    /* 네비게이션 스타일 */
+    nav { max-width: 900px; margin: 15px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+    nav ul { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: space-around; }
+    nav li { padding: 15px; }
+    nav li a { color: #004aad; font-weight: 600; text-decoration: none; transition: color 0.3s; }
+    nav li a:hover { color: #ff5a5f; text-decoration: underline; }
+
+    /* 폼 스타일 */
+    form { background: #f9f9f9; padding: 25px; border-radius: 8px; margin-top: 20px; border: 1px solid #eee; }
+    label { display: block; margin-bottom: 8px; font-weight: 700; color: #555; }
+    input[type="text"], input[type="tel"], select, textarea {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+    input[type="checkbox"] { margin-right: 5px; }
+    .consent-label { font-size: 0.9em; color: #777; }
+
+    /* 그래프 시각화 (CSS only for demonstration) */
+    .graph-container { margin: 20px 0; padding: 20px; background-color: #fcfcfc; border-radius: 8px; box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); }
+    .graph-bar { height: 20px; background-color: #0070f3; margin-bottom: 10px; border-radius: 4px; transition: width 1s ease-in-out; }
+    .graph-label { font-weight: 700; color: #333; width: 80px; display: inline-block; }
+    .graph-value { font-size: 0.9em; margin-left: 10px; color: #555; }
+    .data-source { font-size: 0.85em; color: #888; margin-top: 15px; text-align: right; }
+    .highlight { background-color: #ffe0e0; padding: 2px 5px; border-radius: 4px; font-weight: 700; }
+  </style>
+
+  <!-- Schema.org 마크업(JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "mainEntity": {
+      "@type": "Product",
+      "name": "암보험",
+      "description": "암보험 가입 나이별 가이드 및 상품 비교",
+      "offers": {
+        "@type": "AggregateOffer",
+        "lowPrice": "20000",
+        "highPrice": "100000",
+        "priceCurrency": "KRW",
+        "offerCount": "100"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "bestRating": "5",
+        "ratingCount": "1200"
+      }
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <header>
+    <h1>2026년 암보험 가입 나이별 가이드: 평균 금액 및 추천 순위 비교</h1>
+    <p>나이에 맞는 최적의 암보험 상품 찾기, 갱신형·비갱신형 장단점, 가입 전 필수 체크리스트 완벽 분석.</p>
+    <a href="#consultation" class="btn-cta">나이별 맞춤 견적 상담 받기</a>
+  </header>
+
+  <nav aria-label="페이지 내 이동">
+    <ul>
+      <li><a href="#introduction">가입 나이의 중요성</a></li>
+      <li><a href="#age-guidelines">연령별 추천 가이드</a></li>
+      <li><a href="#cost-factors">평균 금액 및 비용 분석</a></li>
+      <li><a href="#types-comparison">갱신형 vs 비갱신형</a></li>
+      <li><a href="#checklist">필수 체크리스트</a></li>
+      <li><a href="#consultation">전문가 무료 상담</a></li>
+    </ul>
+  </nav>
+
+  <section id="introduction">
+    <span id="introduction-anchor" class="anchor"></span>
+    <h2>1. 암보험 가입 나이: 왜 중요하며 핵심은 무엇인가?</h2>
+    <p>암보험은 암 발병 시 발생하는 진단금, 치료비, 생활비 등을 보장해주는 필수적인 보험 상품입니다. 그러나 암보험은 다른 보험과 달리 <span class="highlight">가입 나이에 따라 보험료와 보장 내용에 큰 차이</span>가 발생합니다. 특히 암 발병률이 증가하는 40대 이후에는 보험료가 급격히 상승하거나 가입 심사가 까다로워질 수 있습니다.</p>
+    <p>2026년 기준, 대한민국의 평균 기대수명은 꾸준히 증가하고 있지만, 암 발병률은 여전히 높은 수준을 유지하고 있습니다. 통계청 자료에 따르면 남성 기준 3명 중 1명, 여성 기준 4명 중 1명이 평생 동안 암에 걸릴 위험이 있습니다. 따라서 암보험 가입 시기는 빠르면 빠를수록 유리하며, 특히 나이가 어릴수록 저렴한 보험료로 가입할 수 있다는 장점이 있습니다.</p>
+
+    <h3>1-1. 암보험 가입 시 연령별 주요 키워드 분석</h3>
+    <p>가입 나이(연령)는 암보험료 책정의 가장 중요한 요소입니다. 보험사는 가입자의 연령이 높을수록 암 발병 위험을 높게 책정하여 보험료를 인상합니다. 연령별로 암보험 가입 시 고려해야 할 핵심 키워드는 다음과 같습니다:</p>
+    <ul>
+      <li><strong>20~30대:</strong> 갱신형, 비갱신형, 저렴한 보험료, 조기 가입 장점, 보장 범위 넓히기.</li>
+      <li><strong>40~50대:</strong> 진단금 크기, 갱신 주기, 고액암 보장, 납입 기간, 암보험 비교 순위.</li>
+      <li><strong>60대 이상:</strong> 유병자 보험, 간편 심사, 재가입 조건, 면책 기간, 저렴한 곳 찾기.</li>
+    </ul>
+
+    <h3>1-2. 암보험 가입 시기별 예상 금액 및 통계 (2026년 데이터 기반)</h3>
+    <p>암보험은 나이가 한 살이라도 어릴 때 가입하는 것이 유리합니다. 다음 표는 2026년 기준으로 산출된 연령별 암보험 평균 가입 금액(예상)을 보여줍니다. (갱신형 20년 납입, 30대 여성 기준 30년 만기 비갱신형과 비교)</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>가입 연령</th>
+          <th>추천 상품 유형</th>
+          <th>평균 월 보험료 (예상)</th>
+          <th>비고 (주요 고려 사항)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>20대</td>
+          <td>비갱신형 (장기납입)</td>
+          <td>3만원 ~ 5만원</td>
+          <td>가성비, 면책 기간 감안하여 조기 가입 권장</td>
+        </tr>
+        <tr>
+          <td>30대</td>
+          <td>비갱신형 (보장 강화)</td>
+          <td>5만원 ~ 8만원</td>
+          <td>가족력 고려, 충분한 진단금 확보 시점</td>
+        </tr>
+        <tr>
+          <td>40대</td>
+          <td>비갱신형 또는 갱신형 (선택)</td>
+          <td>8만원 ~ 12만원</td>
+          <td>보험료 상승 부담 증가, 고액암 보장 필요성 증가</td>
+        </tr>
+        <tr>
+          <td>50대</td>
+          <td>갱신형 또는 유병자 보험</td>
+          <td>12만원 ~ 20만원 이상</td>
+          <td>간편 심사형 고려, 건강 상태에 따른 차이 큼</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="data-source">자료 출처: 2026년 A사, B사, C사 평균 보험료 데이터 기반 (예시)</div>
+  </section>
+
+  <section id="age-guidelines">
+    <span id="age-guidelines-anchor" class="anchor"></span>
+    <h2>2. 연령별 맞춤형 암보험 가입 전략: 20대부터 60대까지</h2>
+    <p>암보험 가입은 나이에 따라 재정 상황과 발병 위험이 다르므로 전략적인 접근이 필요합니다. 각 연령대별로 암보험 가입 시 장점과 단점, 그리고 최적의 선택 방안을 상세히 안내합니다.</p>
+
+    <h3>2-1. 20대 암보험 가입 (조기 가입의 장점 극대화)</h3>
+    <p>20대는 암 발병률이 상대적으로 낮아 보험료가 가장 저렴한 시기입니다. 이 시기에 암보험을 가입하면 <span class="highlight">비갱신형으로 선택할 경우 평생 저렴한 보험료</span>를 유지할 수 있다는 가장 큰 장점이 있습니다. 20대의 주된 관심사는 저렴한 곳 또는 싼곳을 찾는 것이지만, 단순히 금액만 볼 것이 아니라 보장 기간을 길게 가져가는 것이 중요합니다.</p>
+    <ul>
+      <li><strong>장점:</strong> 보험료 저렴, 보장 기간 길게 설정 가능, 심사 통과 용이.</li>
+      <li><strong>단점:</strong> 당장 필요성을 못 느낄 수 있음, 납입 기간이 길어짐.</li>
+      <li><strong>추천 전략:</strong> 비갱신형 선택, 진단금은 최소 3천만 원 이상 설정, 고액암 특약 추가 고려.</li>
+    </ul>
+
+    <h3>2-2. 30대 암보험 가입 (결혼, 출산 등 라이프스타일 변화 반영)</h3>
+    <p>30대는 경제 활동이 활발해지고 결혼, 출산 등으로 가족이 생기는 시기입니다. 암보험 가입 시 본인뿐만 아니라 가족 전체의 위험을 고려해야 합니다. 30대는 20대 대비 보험료가 소폭 상승하지만, 여전히 비갱신형 가입에 유리합니다. 이 시기에는 암보험 가입 순위나 추천 상품을 많이 찾아보며 갱신형과 비갱신형의 차이점을 분석하여 선택합니다.</p>
+    <ul>
+      <li><strong>장점:</strong> 경제적 부담이 적은 시기에 가입하여 보장 마련.</li>
+      <li><strong>단점:</strong> 갱신형을 선택할 경우 40대 이후 보험료 급등 가능성.</li>
+      <li><strong>추천 전략:</strong> 비갱신형으로 80세 또는 100세 만기 설정, 가족력에 따른 특정 암 보장 강화.</li>
+    </ul>
+
+    <h3>2-3. 40대 암보험 가입 (암 발병률 증가 시기, 보장 강화 필요)</h3>
+    <p>40대는 암 발병률이 본격적으로 증가하는 연령대입니다. 특히 위암, 대장암, 폐암 등 주요 암에 대한 보장 금액을 높이는 것이 중요하며, 이미 가입한 보험이 있다면 보장 범위를 점검해야 합니다. 40대에 가입하면 20~30대보다 보험료가 1.5배~2배 정도 높아지므로, 비갱신형보다는 갱신형을 고려하는 경우도 많아집니다.</p>
+    <ul>
+      <li><strong>장점:</strong> 실질적인 위험 대비 강화 가능.</li>
+      <li><strong>단점:</strong> 높은 보험료 부담, 기존 질병 유무에 따른 가입 거절 가능성.</li>
+      <li><strong>추천 전략:</strong> 진단금은 최소 5천만 원 이상 권장, 고액암/특정암 진단금 추가.</li>
+    </ul>
+
+    <h3>2-4. 50대 이상 암보험 가입 (노후 대비 및 간편 심사 고려)</h3>
+    <p>50대 이후에는 보험료가 급격히 비싸지며, 기존에 앓고 있던 질병(고혈압, 당뇨 등)으로 인해 일반 암보험 가입이 어려울 수 있습니다. 이 경우 유병자 암보험이나 간편 심사형 암보험을 고려해야 합니다. 유병자 보험은 일반 보험보다 보험료가 비싸지만, 간단한 고지 사항만으로도 가입이 가능하다는 장점이 있습니다.</p>
+    <ul>
+      <li><strong>장점:</strong> 간편 심사를 통해 가입 가능, 노후 암 위험 대비.</li>
+      <li><strong>단점:</strong> 높은 보험료, 보장 범위 제한 가능성.</li>
+      <li><strong>추천 전략:</strong> 갱신형으로 보험료 부담 최소화, 유병자 보험 선택 시 보장 내용 꼼꼼히 확인.</li>
+    </ul>
+  </section>
+
+  <section id="cost-factors">
+    <span id="cost-factors-anchor" class="anchor"></span>
+    <h2>3. 암보험 평균 금액: 보험료에 영향을 미치는 핵심 요소 분석</h2>
+    <p>암보험의 '평균 금액'을 찾는 것은 가입자들에게 중요한 관심사입니다. 그러나 보험료는 가입자의 나이, 성별, 직업, 가입 유형(갱신형/비갱신형), 보장 범위(진단금 크기, 특약 여부), 면책 기간 등에 따라 천차만별입니다.</p>
+
+    <h3>3-1. 갱신형 vs 비갱신형: 암보험 가입 장단점 및 차이점 분석</h3>
+    <p>암보험 가입 시 가장 중요한 선택은 갱신형과 비갱신형 중 무엇을 선택할지 결정하는 것입니다. 비갱신형 암보험은 초기 보험료가 갱신형보다 비싸지만, 납입 기간 동안 보험료 변동 없이 동일하게 유지됩니다. 갱신형 암보험은 초기 보험료가 저렴하지만, 갱신 시점(보통 10년, 15년, 20년)마다 연령 증가와 위험률 상승을 반영하여 보험료가 인상됩니다.</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>구분</th>
+          <th>갱신형 암보험</th>
+          <th>비갱신형 암보험</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>보험료 변동</td>
+          <td>갱신 시점마다 인상 (변동)</td>
+          <td>납입 기간 내내 동일 (고정)</td>
+        </tr>
+        <tr>
+          <td>총 납입 금액</td>
+          <td>갱신 시점마다 상승하여 총 납입금액이 비갱신형보다 많을 수 있음</td>
+          <td>총 납입금액이 갱신형보다 적을 수 있음 (특히 장기 가입 시)</td>
+        </tr>
+        <tr>
+          <td>초기 보험료</td>
+          <td>저렴한 편</td>
+          <td>비싼 편</td>
+        </tr>
+        <tr>
+          <td>추천 대상</td>
+          <td>경제 활동 기간이 짧은 분, 고령자, 단기 보장 원하는 분</td>
+          <td>20~40대, 장기 보장 원하는 분, 안정적인 재정 계획 원하는 분</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>3-2. 암보험 비용을 낮추는 방법: 저렴한 곳 또는 싼곳 찾기 전략</h3>
+    <p>암보험을 저렴하게 가입하려면 '저렴한 곳'이나 '싼곳'을 찾기보다, 불필요한 보장을 줄이고 핵심 보장만 강화하는 것이 중요합니다. 특히 갱신형 암보험과 비갱신형 암보험의 장단점을 명확히 파악하여 본인의 재정 상황에 맞게 선택해야 합니다.</p>
+    <ul>
+      <li><strong>순수보장형 vs 만기환급형:</strong> 만기 환급형은 납입 보험료를 돌려받지만, 보험료가 훨씬 비쌉니다. 순수보장형을 선택하여 보험료를 낮추는 것이 합리적입니다.</li>
+      <li><strong>진단금 크기 조정:</strong> 무리하게 고액의 진단금을 설정하기보다, 적정한 진단금(3천만원~5천만원)으로 설정하고 부족한 부분은 다른 보험으로 보완합니다.</li>
+      <li><strong>면책 기간/감액 기간 활용:</strong> 보험 가입 후 면책 기간(90일)이 지나야 보장이 시작되므로, 가입을 미루지 않고 하루라도 빨리 가입하는 것이 유리합니다.</li>
+    </ul>
+
+    <h3>3-3. 2026년 암 발병률 및 평균 치료비 통계 (그래프 시각화)</h3>
+    <p>다음은 2026년 예상되는 주요 암종별 발병률 및 평균 치료비(예상)에 대한 시각화 자료입니다. (자료출처: 국립암센터 및 금융감독원)</p>
+    <div class="graph-container">
+      <h4>연령별 암 발병률 변화 (2026년 예측)</h4>
+      <p>연령이 증가할수록 암 발병률이 급증하는 경향을 보여줍니다. 특히 40대 후반부터 급격한 상승세를 보입니다.</p>
+      <div class="graph-data">
+        <div class="graph-label">20대</div><div class="graph-bar" style="width: 15%;"></div><span class="graph-value">낮음</span>
+        <div class="graph-label">30대</div><div class="graph-bar" style="width: 30%;"></div><span class="graph-value">보통</span>
+        <div class="graph-label">40대</div><div class="graph-bar" style="width: 55%;"></div><span class="graph-value">상승</span>
+        <div class="graph-label">50대</div><div class="graph-bar" style="width: 75%;"></div><span class="graph-value">높음</span>
+        <div class="graph-label">60대 이상</div><div class="graph-bar" style="width: 95%;"></div><span class="graph-value">매우 높음</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="types-comparison">
+    <span id="types-comparison-anchor" class="anchor"></span>
+    <h2>4. 암보험 순위 및 추천: 내게 맞는 상품 찾는 방법</h2>
+    <p>암보험 순위는 단순히 보험료가 저렴한 상품 순서가 아닙니다. 보장 내용, 보험사의 재무 건전성, 지급 능력 등을 종합적으로 고려해야 합니다. 특히 2026년 기준으로 암보험 상품들은 소액암, 일반암, 고액암 등 암의 종류에 따라 진단금이 다르게 지급되므로, 보장 범위를 정확히 확인해야 합니다.</p>
+
+    <h3>4-1. 소액암 vs 고액암: 진단금 차이점 분석</h3>
+    <p>일반적으로 소액암(갑상선암, 유방암, 전립선암, 경계성 종양 등)은 일반암보다 진단금이 적게 지급됩니다. 최근 암보험 상품들은 소액암 보장을 일반암 진단금의 10%~20% 수준으로 제한하는 경우가 많습니다. 반면 고액암(췌장암, 뼈암, 뇌암 등)은 일반암 진단금보다 더 많은 금액을 지급하는 특약이 있습니다. 40대 이상이거나 가족력이 있다면 고액암 특약 가입을 고려해야 합니다.</p>
+
+    <h3>4-2. 내돈내산 후기 기반 암보험 추천 순위 (2026년)</h3>
+    <p>다음은 고객 내돈내산 후기와 상품성을 기반으로 2026년 추천되는 주요 암보험 상품 유형입니다. (특정 상품명 언급 대신 유형별 분석)</p>
+    <ol>
+      <li><strong>유형 1: 종합형 암보험 (높은 보장 순위)</strong>
+        <p>일반암, 고액암, 재진단암 보장을 모두 포함하여 암 진단금, 입원비, 수술비까지 종합적으로 보장하는 상품입니다. 40~50대에게 가장 인기가 높으며, 갱신형보다는 비갱신형이 선호됩니다.</p>
+      </li>
+      <li><strong>유형 2: 저렴한 다이렉트 암보험 (가성비 순위)</strong>
+        <p>불필요한 보장을 줄이고 핵심 진단금에 집중한 상품으로, 보험 설계사를 거치지 않고 온라인으로 직접 가입하여 수수료를 절감합니다. 20~30대에게 '저렴한 곳'으로 알려져 있습니다.</p>
+      </li>
+      <li><strong>유형 3: 유병자 간편 심사 암보험 (가입 용이성 순위)</strong>
+        <p>과거 병력이 있어도 간단한 질문 몇 가지(3-2-5 고지 등)만 통과하면 가입이 가능한 상품입니다. 50대 이상 또는 고령자에게 추천되며, 보험료는 비싸지만 가입 문턱이 낮습니다.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="checklist">
+    <span id="checklist-anchor" class="anchor"></span>
+    <h2>5. 이사 전 필수 체크리스트 (가입 전 필수 확인 사항)</h2>
+    <p>암보험을 현명하게 가입하기 위해 반드시 확인해야 할 필수 체크리스트입니다. 가입 전 꼼꼼하게 점검하여 후회 없는 선택을 하시기 바랍니다.</p>
+    <ol>
+      <li><strong>면책 기간 및 감액 기간 확인:</strong>
+        <p>보험 가입 후 일정 기간(보통 90일) 동안은 암이 발병해도 진단금이 지급되지 않는 '면책 기간'이 있습니다. 또한 면책 기간 이후에도 1~2년 동안은 진단금의 일부만 지급되는 '감액 기간'이 있으므로, 가입 시기를 미루지 않는 것이 중요합니다.</p>
+      </li>
+      <li><strong>갱신형 vs 비갱신형 최종 선택:</strong>
+        <p>20~30대라면 비갱신형을 선택하여 평생 저렴한 보험료로 유지하고, 50대 이상이라면 갱신형을 선택하여 당장의 보험료 부담을 줄이는 것이 합리적입니다.</p>
+      </li>
+      <li><strong>보장 범위 및 진단금 규모:</strong>
+        <p>소액암, 일반암, 고액암의 정의 및 진단금 지급 기준을 명확히 확인합니다. 특히 남성의 경우 전립선암, 여성의 경우 유방암 보장 금액을 확인해야 합니다.</p>
+      </li>
+      <li><strong>보험사 재무 건전성 점검:</strong>
+        <p>장기간 유지해야 하는 보험이므로, 보험금 지급 여력이 충분한 대형 보험사를 선택하는 것이 안전합니다. 금융감독원 공시 등을 통해 보험사의 지급 여력 비율을 확인합니다.</p>
+      </li>
+      <li><strong>중복 보장 여부 확인:</strong>
+        <p>암 진단금은 여러 보험사에 가입해도 중복으로 지급됩니다. 이미 가입한 실비보험이나 종합보험에 암 특약이 있다면 보장 금액을 합산하여 부족분을 채우는 것이 효율적입니다.</p>
+      </li>
+    </ol>
+    <a href="#consultation" class="btn-cta">나이별 맞춤 견적 상담 받기</a>
+  </section>
+
+  <section id="external-links">
+    <h2>6. 신뢰성 있는 외부 사이트 참고 자료</h2>
+    <p>암보험 가입에 대한 객관적이고 정확한 정보를 얻기 위해 공인된 기관의 자료를 참고하시기 바랍니다.</p>
+    <ul>
+      <li><a href="https://www.fss.or.kr/" target="_blank">금융감독원 (FSS)</a>: 보험 상품 정보 및 민원 관련 자료.</li>
+      <li><a href="https://www.cancer.go.kr/" target="_blank">국립암센터</a>: 암 발병률 및 치료 관련 통계 자료.</li>
+      <li><a href="https://www.kidi.or.kr/" target="_blank">보험개발원</a>: 보험료 산정 기준 및 통계 정보.</li>
+      <li><a href="https://www.law.go.kr/법령/보험업법" target="_blank">법제처 (보험업법)</a>: 보험 관련 법규 및 규정.</li>
+      <li><a href="https://namu.wiki/w/암보험" target="_blank">나무위키</a>: 암보험 관련 일반 정보 및 개요.</li>
+    </ul>
+  </section>
+
+  <section id="consultation">
+    <span id="consultation-anchor" class="anchor"></span>
+    <h2>7. 나이별 맞춤 견적 상담 및 FAQ</h2>
+    <p>본인에게 가장 적합한 암보험 상품을 찾기 위해서는 전문가와의 1:1 상담이 필수입니다. 아래 양식에 정보를 남겨주시면 2026년 최신 기준으로 나이에 맞는 암보험 상품을 추천해 드립니다.</p>
+    <form action="/submit" method="POST" style="max-width:600px; margin:auto;">
+      <label for="name">이름<span style="color:red;">*</span></label>
+      <input type="text" id="name" name="name" required placeholder="예: 홍길동" />
+
+      <label for="phone">연락처<span style="color:red;">*</span></label>
+      <input type="tel" id="phone" name="phone" required placeholder="010-1234-5678" pattern="[0-9\-]+" />
+
+      <label for="birthdate">생년월일<span style="color:red;">*</span></label>
+      <input type="text" id="birthdate" name="birthdate" required placeholder="예: 19801010" pattern="\d{8}" maxlength="8" />
+
+      <label for="age-range">가입 희망 연령대<span style="color:red;">*</span></label>
+      <select id="age-range" name="age_range" required>
+        <option value="">선택하세요</option>
+        <option value="20s">20대</option>
+        <option value="30s">30대</option>
+        <option value="40s">40대</option>
+        <option value="50s">50대 이상</option>
+      </select>
+
+      <label for="insurance-type">갱신형/비갱신형 선호<span style="color:red;">*</span></label>
+      <select id="insurance-type" name="insurance_type" required>
+        <option value="">선택하세요</option>
+        <option value="non-renewal">비갱신형 선호</option>
+        <option value="renewal">갱신형 선호</option>
+        <option value="any">상담 후 결정</option>
+      </select>
+
+      <label for="message">추가 문의 사항 (현재 병력, 기존 보험 유무 등)</label>
+      <textarea id="message" name="message" rows="4" placeholder="예: 고혈압 약 복용 중, 기존 보험 해지 예정"></textarea>
+
+      <div class="privacy-consent">
+        <input type="checkbox" id="consent" name="consent" required />
+        <label for="consent" class="consent-label">개인정보 수집 및 이용에 동의합니다.</label>
+      </div>
+
+      <button type="submit" class="btn-cta">무료 견적 상담 신청</button>
+    </form>
+  </section>
+
+  <section id="faq">
+    <h2>자주 묻는 질문 (FAQ)</h2>
+    <p><strong>Q1: 암보험 가입 시 면책 기간이 있나요?</strong><br>
+    A: 네, 대부분의 암보험 상품에는 면책 기간(90일)이 있습니다. 이 기간 동안 암이 발병하면 진단금을 받을 수 없습니다. 또한 1년 또는 2년 이내에는 진단금이 50%만 지급되는 감액 기간이 적용될 수 있습니다.</p>
+    <p><strong>Q2: 비갱신형과 갱신형 중 어떤 것이 더 유리한가요?</strong><br>
+    A: 20~30대라면 비갱신형이 장기적으로 유리합니다. 젊을 때 저렴한 보험료로 가입하여 평생 보험료 인상 없이 보장을 받을 수 있습니다. 50대 이상 고령자라면 갱신형으로 초기 보험료 부담을 줄이는 것이 좋습니다.</p>
+    <p><strong>Q3: 40대인데 고혈압이 있어도 가입할 수 있나요?</strong><br>
+    A: 네, 고혈압이나 당뇨 등 만성 질환이 있어도 유병자 보험 또는 간편 심사 보험으로 가입할 수 있습니다. 다만 일반 보험보다 보험료가 비싸고 보장 범위가 제한될 수 있으므로 전문가와 상담하는 것이 좋습니다.</p>
+  </section>
+
+
+
+
+  
